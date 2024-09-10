@@ -22,6 +22,8 @@ class graph{
         graph(std::vector<std::string>& nodes);
         ~graph();
 
+        std::string buildString(std::vector<std::string>& nodes);
+
         std::vector<int> getRoute();
 
 };

@@ -29,5 +29,7 @@ int main(int argc, char** argv){
         std::cout << combinations[x] << "\n";
     }
 
+    std::cout << combination_map.buildString(combinations) << "\n";
+
     return 0;
 }

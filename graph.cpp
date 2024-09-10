@@ -23,7 +23,7 @@ graph::graph(std::vector<std::string>& combinations){
             int x;
             for(x = 0; x < string_size; x++){
 
-                if(combinations[j].substr(x,string_size) == combinations[k].substr(0,string_size-x))
+                if(combinations[j].substr(x,string_size-x) == combinations[k].substr(0,string_size-x))
                     break;
             }
             distance_map[j][k] = x;
@@ -73,6 +73,7 @@ void graph::getRouteHelper(std::vector<int>& route, size_t size, size_t& min_siz
 
         for(int n = 0; n < map_size; n++){
             if(n == from) continue;
+            if(distance_map[from][n] > (string_size+1)/2) continue;
             if(std::find(route.begin(),route.end(),n) == route.end()){
                 route.push_back(n);
                 getRouteHelper(route, size + distance_map[from][n], min_size);
@@ -83,3 +84,14 @@ void graph::getRouteHelper(std::vector<int>& route, size_t size, size_t& min_siz
 
 }
 
+std::string graph::buildString(std::vector<std::string>& nodes){
+    std::string supercombination = "";
+    supercombination += nodes[0];
+
+    for(int i = 1; i < nodes.size(); i++){
+        supercombination += nodes[smallest_route[i]].substr(string_size - distance_map[smallest_route[i-1]][smallest_route[i]],string_size);
+        printf("%s :%s\n", nodes[smallest_route[i]].substr(string_size - distance_map[smallest_route[i-1]][smallest_route[i]],string_size).c_str() ,supercombination.c_str());
+    }
+
+    return supercombination;
+}

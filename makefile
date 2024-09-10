@@ -16,4 +16,5 @@ main.o: main.cpp generator.h graph.h
 clean:
 	rm main.o
 	rm generator.o
+	rm graph.o
 	rm calculate
