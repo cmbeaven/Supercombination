@@ -17,17 +17,17 @@ int main(int argc, char** argv){
 
     std::vector<std::string> combinations = gen.generateOutcomes();
     
-    for(auto x : combinations){
-        std::cout << x << std::endl;
-    }
+    // for(auto x : combinations){
+    //     std::cout << x << std::endl;
+    // }
 
     graph combination_map(combinations);
 
     std::vector<int> supercombination = combination_map.getRoute();
 
-    for(auto x : supercombination){
-        std::cout << combinations[x] << "\n";
-    }
+    // for(auto x : supercombination){
+    //     std::cout << combinations[x] << "\n";
+    // }
 
     std::cout << combination_map.buildString(combinations) << "\n";
 
