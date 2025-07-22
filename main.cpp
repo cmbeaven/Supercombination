@@ -3,9 +3,13 @@
 #include "graph.h"
 #include <string>
 #include <vector>
+#include <iomanip>
 #include <iostream>
+#include <chrono>
 
 int main(int argc, char** argv){
+
+    auto t_start = std::chrono::high_resolution_clock::now();
 
     if(argc != 2){
         return 1;
@@ -30,6 +34,10 @@ int main(int argc, char** argv){
     // }
 
     std::cout << combination_map.buildString(combinations) << "\n";
+
+    auto diff = std::chrono::high_resolution_clock::now() - t_start;
+
+    std::cout << "Time passed: " << std::dec << diff.count()/1000000 << "ms.\n";
 
     return 0;
 }

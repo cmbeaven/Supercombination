@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <iomanip>
 #include <iostream>
 #include <algorithm>
 #include <limits>
@@ -60,6 +61,11 @@ std::vector<int> graph::getRoute(){
 
         getRouteHelper(possible_route,string_size,min_size);
 
+#ifdef DEBUG
+        std::cout << std::dec << std::setw(0);
+#endif
+
+
         std::cout << min_size << "\n";
     
     }
@@ -69,18 +75,35 @@ std::vector<int> graph::getRoute(){
 void graph::getRouteHelper(std::vector<int>& route, size_t size, size_t& min_size){
     // if route is bigger than current minimum size, return and don't go further
     if(size >= min_size){
+#ifdef DEBUG
+        for(auto x : route){
+            std::cout << std::hex << std::setw(2) <<x;
+        }
+        std::cout << ": route too long\n";
+#endif
         return;
     }
     // if route is smaller than current smallest, set as new smallest route
     else if(route.size() == map_size){
         min_size = size;
         smallest_route = route;
+#ifdef DEBUG
+        for(auto x : route){
+            std::cout << std::hex << std::setw(2) << x;
+        }
+        std::cout << ": route accepted\n";
+#endif
         return;
     }
     // recall function with a new and unique node appended to the route.
     else{
         int from = *(route.end() - 1);
-
+#ifdef DEBUG
+        for(auto x : route){
+            std::cout << std::hex << std::setw(2) << x;
+        }
+        std::cout << ": route moving forward\n";
+#endif
         for(int n = 0; n < map_size; n++){
             if(n == from) continue;
             if(distance_map[from][n] > (string_size+1)/2) continue;
@@ -91,6 +114,12 @@ void graph::getRouteHelper(std::vector<int>& route, size_t size, size_t& min_siz
             }
         }
     }
+#ifdef DEBUG
+        for(auto x : route){
+            std::cout << std::hex << std::setw(2) << x;
+        }
+        std::cout << ": route abandoned\n";
+#endif
 
 }
 
@@ -102,7 +131,9 @@ std::string graph::buildString(std::vector<std::string>& nodes){
     // add a substring of the next node onto the current string.
     for(int i = 1; i < nodes.size(); i++){
         supercombination += nodes[smallest_route[i]].substr(string_size - distance_map[smallest_route[i-1]][smallest_route[i]],string_size);
+#ifdef DEBUG
         printf("%s||%s :%s\n",nodes[smallest_route[i]].c_str(), nodes[smallest_route[i]].substr(string_size - distance_map[smallest_route[i-1]][smallest_route[i]],string_size).c_str() ,supercombination.c_str());
+#endif
     }
 
     return supercombination;

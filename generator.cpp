@@ -31,6 +31,9 @@ void generator::generateHelper(std::vector<std::string>& results, std::string co
 
     // if no elements left, add combination to final results
     if(elements_left.size() == 0){
+ #ifdef DEBUG
+        std::cout << combination << "\n";
+ #endif
         results.push_back(combination);
         return;
     }
